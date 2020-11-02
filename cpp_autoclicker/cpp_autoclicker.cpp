@@ -81,10 +81,13 @@ void MouseMoveTo(int toX, int toY) {
 }
 
 void CustomizeClicker(const char* type, int& numOfClicks, int& sleepTime) {
-	std::cout << "Number of "<< type << ": ";
+	std::cout << "Number of " << type << ": ";
 	std::cin >> numOfClicks;
-	std::cout << "Wait between " << type << ": ";
+	std::cout << "Wait between " << type << " (ms): ";
 	std::cin >> sleepTime;
+}
+
+void CountDown() {
 	std::cout << "Starting in 3 seconds...\n";
 	Sleep(1000);
 	std::cout << "2..\n";
@@ -109,26 +112,30 @@ start:
 	GetMethodNumber(methodNumber);
 
 	if (methodNumber == 1) {
-		CustomizeClicker("reads", numOfClicks, sleepTime);
+		CustomizeClicker("reads", numOfClicks, sleepTime); CountDown();
 		for (int i = 0; i < numOfClicks; i++) {
 			GetMousePosition(xPos, yPos);
+			CountDown();
 			printf("X, Y: (%i, %i)\n", xPos, yPos);
 			Sleep(sleepTime);
 		}
+		goto start;
 	}
 	else if (methodNumber == 2) {
-		CustomizeClicker("clicks", numOfClicks, sleepTime);
+		CustomizeClicker("clicks", numOfClicks, sleepTime); CountDown();
 		for (int i = 0; i < numOfClicks; i++) {
 			MouseRightClick();
 			Sleep(sleepTime);
 		}
+		goto start;
 	}
 	else if (methodNumber == 3) {
-		CustomizeClicker("clicks", numOfClicks, sleepTime);
+		CustomizeClicker("clicks", numOfClicks, sleepTime); CountDown();
 		for (int i = 0; i < numOfClicks; i++) {
 			MouseLeftClick();
 			Sleep(sleepTime);
 		}
+		goto start;
 	}
 	else if (methodNumber == 4) {
 		CustomizeClicker("moves", numOfClicks, sleepTime);
@@ -136,10 +143,12 @@ start:
 		std::cin >> xPos;
 		std::cout << "Enter Y position: ";
 		std::cin >> yPos;
+		CountDown();
 		for (int i = 0; i < numOfClicks; i++) {
 			MouseMoveTo(xPos, yPos);
 			Sleep(sleepTime);
 		}
+		goto start;
 	}
 	else {
 		return 0;
